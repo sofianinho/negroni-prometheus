@@ -22,11 +22,13 @@ const (
 type Middleware struct {
 	reqs    *prometheus.CounterVec
 	latency *prometheus.HistogramVec
+	routes	[]string
 }
 
 // NewMiddleware returns a new prometheus Middleware handler.
-func NewMiddleware(name string, buckets ...float64) *Middleware {
+func NewMiddleware(name string, routes []string, buckets ...float64) *Middleware {
 	var m Middleware
+	m.routes = routes
 	m.reqs = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Name:        reqsName,
@@ -54,8 +56,15 @@ func NewMiddleware(name string, buckets ...float64) *Middleware {
 
 func (m *Middleware) ServeHTTP(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	start := time.Now()
-	next(rw, r)
 	res := negroni.NewResponseWriter(rw)
-	m.reqs.WithLabelValues(http.StatusText(res.Status()), r.Method, r.URL.Path).Inc()
-	m.latency.WithLabelValues(http.StatusText(res.Status()), r.Method, r.URL.Path).Observe(float64(time.Since(start).Nanoseconds()) / 1000000)
+	next(res, r)
+	url := "other"
+	for _, u := range m.routes {
+		if strings.HasPrefix(r.URL.Path, u) {
+			url = u
+			break
+		}
+	}
+	m.reqs.WithLabelValues(http.StatusText(res.Status()), r.Method, url).Inc()
+	m.latency.WithLabelValues(http.StatusText(res.Status()), r.Method, url).Observe(float64(time.Since(start).Nanoseconds()) / 1000000)
 }
