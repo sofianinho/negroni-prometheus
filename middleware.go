@@ -3,6 +3,7 @@ package negroniprometheus
 import (
 	"net/http"
 	"time"
+	"strings"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/urfave/negroni"
