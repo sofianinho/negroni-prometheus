@@ -15,7 +15,7 @@ func Test_Logger(t *testing.T) {
 	recorder := httptest.NewRecorder()
 
 	n := negroni.New()
-	m := NewMiddleware("test")
+	m := NewMiddleware("test", []string{"/metrics", "/ok"})
 	n.Use(m)
 	r := http.NewServeMux()
 	r.Handle("/metrics", prometheus.Handler())
