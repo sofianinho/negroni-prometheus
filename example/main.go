@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	negroniprometheus "github.com/zbindenren/negroni-prometheus"
+	negroniprometheus "github.com/sofianinho/negroni-prometheus"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/urfave/negroni"
