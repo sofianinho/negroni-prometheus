@@ -63,7 +63,7 @@ func (m *Middleware) ServeHTTP(rw http.ResponseWriter, r *http.Request, next htt
 	url := "other"
 	for _, u := range m.routes {
 		if strings.HasPrefix(r.URL.Path, u) {
-			url = r.URL.Path
+			url = u
 			break
 		}
 	}
