@@ -2,8 +2,9 @@ package negroniprometheus
 
 import (
 	"net/http"
-	"time"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/urfave/negroni"
@@ -23,7 +24,7 @@ const (
 type Middleware struct {
 	reqs    *prometheus.CounterVec
 	latency *prometheus.HistogramVec
-	routes	[]string
+	routes  []string
 }
 
 // NewMiddleware returns a new prometheus Middleware handler.
@@ -66,6 +67,6 @@ func (m *Middleware) ServeHTTP(rw http.ResponseWriter, r *http.Request, next htt
 			break
 		}
 	}
-	m.reqs.WithLabelValues(http.StatusText(res.Status()), r.Method, url).Inc()
-	m.latency.WithLabelValues(http.StatusText(res.Status()), r.Method, url).Observe(float64(time.Since(start).Nanoseconds()) / 1000000)
+	m.reqs.WithLabelValues(strconv.Itoa(res.Status()), r.Method, url).Inc()
+	m.latency.WithLabelValues(strconv.Itoa(res.Status()), r.Method, url).Observe(float64(time.Since(start).Nanoseconds()) / 1000000)
 }
