@@ -1,4 +1,4 @@
-# negroni-prometheus [![GoDoc](http://godoc.org/github.com/zbinderen/negroni-prometheus?status.svg)](http://godoc.org/github.com/zbindenren/negroni-prometheus) [![Go Report Card](https://goreportcard.com/badge/github.com/zbindenren/negroni-prometheus)](https://goreportcard.com/report/github.com/zbindenren/negroni-prometheus)
+# negroni-prometheus [![GoDoc](http://godoc.org/github.com/sofianinho/negroni-prometheus?status.svg)](http://godoc.org/github.com/sofianinho/negroni-prometheus) [![Go Report Card](https://goreportcard.com/badge/github.com/sofianinho/negroni-prometheus)](https://goreportcard.com/report/github.com/sofianinho/negroni-prometheus)
 [Prometheus](http://prometheus.io) middleware for [negroni](https://github.com/urfave/negroni).
 
 ## Why
@@ -9,7 +9,7 @@ Instead of logging request times, it is considered best practice to provide an e
 ## Installation
 
 ```bash
-$ go get github.com/zbindenren/negroni-prometheus
+$ go get github.com/sofianinho/negroni-prometheus
 ```
 
 ## Usage
